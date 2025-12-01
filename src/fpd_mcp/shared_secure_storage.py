@@ -76,45 +76,45 @@ class UnifiedSecureStorage:
         logger.debug(f"USPTO key path: {self.uspto_key_path}")
         logger.debug(f"Mistral key path: {self.mistral_key_path}")
         logger.debug(f"Internal auth secret path: {self.internal_auth_secret_path}")
-    
+
     def has_uspto_key(self) -> bool:
         """Check if USPTO API key exists in secure storage."""
         return self.uspto_key_path.exists()
-    
+
     def has_mistral_key(self) -> bool:
         """Check if Mistral API key exists in secure storage."""
         return self.mistral_key_path.exists()
-    
+
     def get_uspto_key(self) -> Optional[str]:
         """
         Retrieve USPTO API key from secure storage.
-        
+
         Returns:
             USPTO API key string, or None if not found or decryption fails
         """
         return self._load_single_key(self.uspto_key_path, "USPTO_API_KEY")
-    
+
     def store_uspto_key(self, key: str) -> bool:
         """
         Store USPTO API key in secure storage.
-        
+
         Args:
             key: USPTO API key string
-            
+
         Returns:
             True if successful, False otherwise
         """
         return self._store_single_key(key, self.uspto_key_path, "USPTO_API_KEY")
-    
+
     def get_mistral_key(self) -> Optional[str]:
         """
         Retrieve Mistral API key from secure storage.
-        
+
         Returns:
             Mistral API key string, or None if not found or decryption fails
         """
         return self._load_single_key(self.mistral_key_path, "MISTRAL_API_KEY")
-    
+
     def store_mistral_key(self, key: str) -> bool:
         """
         Store Mistral API key in secure storage.
@@ -252,7 +252,7 @@ class UnifiedSecureStorage:
         except Exception as e:
             logger.error(f"Failed to store {key_name}: {e}")
             return False
-    
+
     def _load_single_key(self, path: Path, key_name: str) -> Optional[str]:
         """
         Load single key with entropy extraction.
@@ -298,7 +298,7 @@ class UnifiedSecureStorage:
         except Exception as e:
             logger.error(f"Failed to load {key_name}: {e}")
             return None
-    
+
     def get_storage_stats(self) -> dict:
         """
         Get storage statistics for debugging.
@@ -316,7 +316,7 @@ class UnifiedSecureStorage:
             "platform": sys.platform,
             "dpapi_available": sys.platform == "win32"
         }
-    
+
     def list_available_keys(self) -> list:
         """
         List available keys for debugging.
@@ -385,10 +385,10 @@ def ensure_internal_auth_secret() -> str:
 def has_secure_key(key_name: str) -> bool:
     """
     Check if a secure key exists (for backward compatibility).
-    
+
     Args:
         key_name: "USPTO_API_KEY" or "MISTRAL_API_KEY"
-        
+
     Returns:
         True if key exists, False otherwise
     """
@@ -404,10 +404,10 @@ def has_secure_key(key_name: str) -> bool:
 def get_secure_api_key(key_name: str) -> Optional[str]:
     """
     Get a secure API key (for backward compatibility).
-    
+
     Args:
         key_name: "USPTO_API_KEY" or "MISTRAL_API_KEY"
-        
+
     Returns:
         API key string or None
     """
@@ -423,11 +423,11 @@ def get_secure_api_key(key_name: str) -> Optional[str]:
 def store_secure_api_key(key: str, key_name: str) -> bool:
     """
     Store a secure API key (for backward compatibility).
-    
+
     Args:
         key: API key string
         key_name: "USPTO_API_KEY" or "MISTRAL_API_KEY"
-        
+
     Returns:
         True if successful, False otherwise
     """

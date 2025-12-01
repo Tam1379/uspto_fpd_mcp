@@ -17,16 +17,16 @@ async def revival_petition_analysis_prompt(
 ) -> str:
     """
     Revival petition analysis for abandonment pattern identification and risk assessment.
-    
+
     Search criteria (at least ONE required):
-    - company_name: Company/applicant name (e.g., "TechCorp Inc") 
+    - company_name: Company/applicant name (e.g., "TechCorp Inc")
     - art_unit: Art unit number (e.g., "2128")
-    
+
     Analysis options:
     - date_range_start: Analysis start date (YYYY-MM-DD, defaults to 5 years ago)
     - outcome_focus: Focus analysis (all, granted, denied, dismissed) [DEFAULT: all]
     - include_reasoning: Include Director's reasoning analysis (true/false) [DEFAULT: true]
-    
+
     Returns comprehensive revival petition analysis with abandonment risk indicators and procedural insights.
     """
     return f"""Revival Petition Analysis - Abandonment Risk Assessment
@@ -275,7 +275,7 @@ Use `fpd_search_petitions_balanced` with the refined query for detailed analysis
 = (Granted Revival Petitions / Total Revival Petitions) × 100
 - Target: >70% (good), 50-70% (moderate), <50% (concerning)
 
-** Abandonment Frequency** 
+** Abandonment Frequency**
 = (Revival Petitions / Total Applications) × 100
 - Lower percentages indicate better prosecution management
 
@@ -362,5 +362,3 @@ Strategic Portfolio Insights:
 - Applications at high abandonment risk
 - Process failure pattern identification
 - Cross-MCP integration opportunities"""
-
-

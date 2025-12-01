@@ -9,21 +9,21 @@ from . import mcp
 )
 async def complete_portfolio_due_diligence_prompt(
     company_name: str,
-    portfolio_size_limit: str = "50", 
+    portfolio_size_limit: str = "50",
     risk_scoring: str = "true"
 ) -> str:
     """
     Complete portfolio due diligence with patent lifecycle risk assessment.
-    
+
     WARNING: DEPENDENCIES: Requires Patent File Wrapper (PFW) MCP and PTAB MCP
-    
+
     Required input:
     - company_name: Company/applicant name for portfolio analysis (e.g., "TechCorp Inc")
-    
+
     Analysis options:
     - portfolio_size_limit: Maximum applications to analyze (default: 50)
     - risk_scoring: Calculate comprehensive risk scores (true/false) [DEFAULT: true]
-    
+
     Returns complete patent lifecycle analysis: Filing -> Prosecution -> Petitions -> Grant -> PTAB with integrated risk assessment.
     """
     return f"""Complete Portfolio Due Diligence - Three-MCP Lifecycle Analysis
@@ -336,7 +336,7 @@ pfw_search_applications_minimal(
     query='firstApplicantName:"{company_name}"',
     fields=[
         'applicationNumberText',
-        'patentNumber', 
+        'patentNumber',
         'inventionTitle',
         'applicationMetaData.firstApplicantName',
         'applicationMetaData.groupArtUnitNumber',
@@ -469,5 +469,3 @@ Predictive Analytics:
 ** TRIPLE-MCP INTEGRATION**: This workflow showcases the power of combining Patent File Wrapper (prosecution), Final Petition Decisions (procedural), and PTAB (post-grant) data for unprecedented portfolio intelligence.
 
 ** COMPETITIVE ADVANTAGE**: Complete patent lifecycle visibility enables proactive risk management and strategic portfolio optimization that competitors cannot achieve without integrated data analysis."""
-
-

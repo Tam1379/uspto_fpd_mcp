@@ -16,18 +16,18 @@ async def prosecution_quality_correlation_prompt(
 ) -> str:
     """
     Prosecution quality correlation analysis between examiner patterns and petition frequency.
-    
+
     WARNING: DEPENDENCIES: Requires Patent File Wrapper (PFW) MCP
-    
+
     Analysis criteria (at least ONE required):
     - art_unit: Art unit number for group analysis (e.g., "2128")
     - examiner_name: Specific examiner for individual analysis (e.g., "John Smith")
-    
+
     Analysis options:
     - date_range_start: Analysis start date (YYYY-MM-DD format, e.g., "2020-01-01")
     - date_range_end: Analysis end date (YYYY-MM-DD format, e.g., "2024-12-31")
     - statistical_analysis: Include statistical correlation metrics (true/false) [DEFAULT: true]
-    
+
     Returns comprehensive correlation analysis between prosecution patterns and petition frequency for quality assessment.
     """
     return f"""Prosecution Quality Correlation Analysis - Examiner Performance Assessment
@@ -298,7 +298,7 @@ pfw_search_applications_minimal(
     fields=[
         'applicationNumberText',
         'applicationMetaData.examinerNameText',
-        'applicationMetaData.groupArtUnitNumber', 
+        'applicationMetaData.groupArtUnitNumber',
         'applicationMetaData.filingDate',
         'patentNumber'
     ],  # Only 5 fields vs 15 standard fields (70% reduction)
@@ -443,5 +443,3 @@ Cross-MCP Integration Benefits:
 ** ADVANCED ANALYTICS**: Statistical correlation analysis between prosecution patterns and petition frequency provides unprecedented quality insights.
 
 ** DUAL-MCP POWER**: Combining PFW prosecution data with FPD petition data reveals quality correlations impossible to detect with single data sources."""
-
-

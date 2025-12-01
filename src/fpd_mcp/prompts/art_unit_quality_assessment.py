@@ -15,15 +15,15 @@ async def art_unit_quality_assessment_prompt(
 ) -> str:
     """
     Art unit quality assessment through petition pattern analysis.
-    
+
     Required input:
     - art_unit: Art unit number to analyze (e.g., "2128", "1650")
-    
+
     Optional parameters:
     - date_range_start: Analysis start date (YYYY-MM-DD format, e.g., "2020-01-01")
-    - date_range_end: Analysis end date (YYYY-MM-DD format, e.g., "2024-12-31")  
+    - date_range_end: Analysis end date (YYYY-MM-DD format, e.g., "2024-12-31")
     - comparison_analysis: Include technology center comparison (true/false) [DEFAULT: true]
-    
+
     Returns comprehensive art unit quality metrics including examiner patterns and prosecution efficiency indicators.
     """
     return f"""Art Unit Quality Assessment - Prosecution Pattern Analysis
@@ -250,5 +250,3 @@ except:
 ```
 
 **EXPECTED OUTPUT FORMAT:** Comprehensive quality report with metrics table, quality rating, petition breakdown, and actionable recommendations."""
-
-

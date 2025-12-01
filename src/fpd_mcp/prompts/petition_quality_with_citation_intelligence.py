@@ -25,7 +25,7 @@ async def petition_quality_with_citation_intelligence_prompt(
     - date_range_end: Analysis end date (YYYY-MM-DD format)
     - include_citation_analysis: Include Enhanced Citations analysis (true/false) [DEFAULT: true]
     - analysis_depth: Analysis thoroughness (basic, standard, comprehensive) [DEFAULT: comprehensive]
-    
+
     **IMPORTANT**: Citations API contains Office Action data from October 1, 2017 onwards. Applications filed from 2015-2016 typically have citation data available due to 1-2 year prosecution delays.
 
     Returns art unit quality assessment with petition-citation correlation analysis and examiner citation quality metrics.
@@ -335,5 +335,3 @@ CITATION API LIMITATIONS:
 - Applications filed 2015-2016+ typically have citation data due to 1-2 year prosecution delays
 - Examiner name NOT in Citations API - requires PFW workflow
 - Decision codes NOT available - use prosecution outcome from PFW"""
-
-

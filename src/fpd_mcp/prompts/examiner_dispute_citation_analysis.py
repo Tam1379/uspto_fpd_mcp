@@ -27,7 +27,7 @@ async def examiner_dispute_citation_analysis_prompt(
     - date_range_start: Analysis start date [DEFAULT: "2015-01-01" - Accounts for 1-2 year prosecution delay before Office Actions. Do not use dates earlier than 2015-01-01 due to Citations API limitations.]
     - date_range_end: Analysis end date (YYYY-MM-DD format)
     - include_comparison: Compare disputed vs non-disputed applications (true/false) [DEFAULT: true]
-    
+
     **IMPORTANT**: Citations API contains Office Action data from October 1, 2017 onwards. Applications filed from 2015-2016 typically have citation data available due to 1-2 year prosecution delays.
 
     Returns examiner dispute analysis with citation pattern correlation and quality assessment.
@@ -343,8 +343,8 @@ CRITICAL: Start with PFW MCP to find examiner applications (FPD does not have ex
 pfw_search_applications_minimal(
     examiner_name="{examiner_name}",
     fields=[
-        'applicationNumberText', 
-        'applicationMetaData.filingDate', 
+        'applicationNumberText',
+        'applicationMetaData.filingDate',
         'applicationMetaData.examinerNameText',
         'applicationStatusCode'
     ],  # Only 4 fields vs 15 standard (73% reduction)
@@ -449,4 +449,3 @@ CITATION METRICS DEFINITIONS:
 - citationCategoryCode: X=US patent, Y=foreign patent, NPL=non-patent literature
 - passageLocationText: Detailed citation passages (presence indicates thoroughness)
 - officeActionCategory: CTNF=non-final, CTFR=final rejection, etc."""
-

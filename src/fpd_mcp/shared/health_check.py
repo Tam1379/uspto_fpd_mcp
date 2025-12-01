@@ -27,7 +27,7 @@ class HealthStatus(Enum):
 
 class HealthCheck:
     """Individual health check result"""
-    
+
     def __init__(
         self,
         name: str,
@@ -42,7 +42,7 @@ class HealthCheck:
         self.response_time_ms = response_time_ms
         self.details = details or {}
         self.timestamp = time.time()
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert health check to dictionary"""
         result = {
@@ -51,19 +51,19 @@ class HealthCheck:
             "message": self.message,
             "timestamp": self.timestamp
         }
-        
+
         if self.response_time_ms is not None:
             result["response_time_ms"] = self.response_time_ms
-        
+
         if self.details:
             result["details"] = self.details
-        
+
         return result
 
 
 class HealthChecker:
     """Comprehensive health check system"""
-    
+
     def __init__(
         self,
         api_client: Optional[FPDClient] = None,
@@ -73,7 +73,7 @@ class HealthChecker:
     ):
         """
         Initialize health checker
-        
+
         Args:
             api_client: FPD API client for connectivity checks
             field_manager: Field manager for configuration checks
@@ -84,11 +84,11 @@ class HealthChecker:
         self.field_manager = field_manager
         self.cache_manager = cache_manager
         self.structured_logger = structured_logger or StructuredLogger("health_checker")
-    
+
     async def check_api_connectivity(self) -> HealthCheck:
         """Check USPTO API connectivity"""
         start_time = time.time()
-        
+
         try:
             if not self.api_client:
                 return HealthCheck(
@@ -96,16 +96,16 @@ class HealthChecker:
                     status=HealthStatus.UNHEALTHY,
                     message="API client not configured"
                 )
-            
+
             # Try a minimal API call to test connectivity
             result = await self.api_client.search_petitions(
                 query="*",
                 limit=1,
                 offset=0
             )
-            
+
             response_time_ms = (time.time() - start_time) * 1000
-            
+
             if "error" in result:
                 return HealthCheck(
                     name="api_connectivity",
@@ -114,7 +114,7 @@ class HealthChecker:
                     response_time_ms=response_time_ms,
                     details={"error_details": result}
                 )
-            
+
             return HealthCheck(
                 name="api_connectivity",
                 status=HealthStatus.HEALTHY,
@@ -122,7 +122,7 @@ class HealthChecker:
                 response_time_ms=response_time_ms,
                 details={"result_count": result.get("recordTotalQuantity", 0)}
             )
-        
+
         except Exception as e:
             response_time_ms = (time.time() - start_time) * 1000
             return HealthCheck(
@@ -132,7 +132,7 @@ class HealthChecker:
                 response_time_ms=response_time_ms,
                 details={"exception": str(e)}
             )
-    
+
     def check_circuit_breakers(self) -> HealthCheck:
         """Check circuit breaker status"""
         try:
@@ -142,19 +142,19 @@ class HealthChecker:
                     status=HealthStatus.UNHEALTHY,
                     message="API client not configured"
                 )
-            
+
             breaker_status = self.api_client.get_circuit_breaker_status()
-            
+
             # Check if any circuit breakers are open
             open_breakers = []
             degraded_breakers = []
-            
+
             for breaker_name, status in breaker_status.items():
                 if status["state"] == "open":
                     open_breakers.append(breaker_name)
                 elif status["state"] == "half_open":
                     degraded_breakers.append(breaker_name)
-            
+
             if open_breakers:
                 return HealthCheck(
                     name="circuit_breakers",
@@ -176,7 +176,7 @@ class HealthChecker:
                     message="All circuit breakers closed",
                     details=breaker_status
                 )
-        
+
         except Exception as e:
             return HealthCheck(
                 name="circuit_breakers",
@@ -184,7 +184,7 @@ class HealthChecker:
                 message=f"Circuit breaker check failed: {str(e)}",
                 details={"exception": str(e)}
             )
-    
+
     def check_cache_health(self) -> HealthCheck:
         """Check cache system health"""
         try:
@@ -194,15 +194,15 @@ class HealthChecker:
                     status=HealthStatus.DEGRADED,
                     message="Cache manager not configured - caching disabled"
                 )
-            
+
             cache_stats = self.cache_manager.get_stats()
-            
+
             # Determine health based on cache statistics
             if cache_stats.get("cache_type") == "TTLCache":
                 current_size = cache_stats.get("current_size", 0)
                 max_size = cache_stats.get("max_size", 100)
                 utilization = (current_size / max_size) * 100 if max_size > 0 else 0
-                
+
                 if utilization > 90:
                     status = HealthStatus.DEGRADED
                     message = f"Cache near capacity: {utilization:.1f}% full"
@@ -213,7 +213,7 @@ class HealthChecker:
                 # SimpleCache
                 valid_items = cache_stats.get("valid_items", 0)
                 total_items = cache_stats.get("total_items", 0)
-                
+
                 if total_items > 0:
                     valid_ratio = (valid_items / total_items) * 100
                     if valid_ratio < 50:
@@ -225,14 +225,14 @@ class HealthChecker:
                 else:
                     status = HealthStatus.HEALTHY
                     message = "Cache empty but healthy"
-            
+
             return HealthCheck(
                 name="cache",
                 status=status,
                 message=message,
                 details=cache_stats
             )
-        
+
         except Exception as e:
             return HealthCheck(
                 name="cache",
@@ -240,7 +240,7 @@ class HealthChecker:
                 message=f"Cache health check failed: {str(e)}",
                 details={"exception": str(e)}
             )
-    
+
     def check_configuration(self) -> HealthCheck:
         """Check configuration health"""
         try:
@@ -250,16 +250,16 @@ class HealthChecker:
                     status=HealthStatus.UNHEALTHY,
                     message="Field manager not configured"
                 )
-            
+
             # Check if field sets are available
             field_sets = self.field_manager.get_predefined_sets()
             required_sets = ["petitions_minimal", "petitions_balanced"]
-            
+
             missing_sets = []
             for required_set in required_sets:
                 if required_set not in field_sets:
                     missing_sets.append(required_set)
-            
+
             if missing_sets:
                 return HealthCheck(
                     name="configuration",
@@ -267,11 +267,11 @@ class HealthChecker:
                     message=f"Missing required field sets: {', '.join(missing_sets)}",
                     details={"available_sets": list(field_sets.keys())}
                 )
-            
+
             # Check field set completeness
             minimal_fields = field_sets["petitions_minimal"].get("fields", [])
             balanced_fields = field_sets["petitions_balanced"].get("fields", [])
-            
+
             if len(minimal_fields) < 5:
                 return HealthCheck(
                     name="configuration",
@@ -279,7 +279,7 @@ class HealthChecker:
                     message="Minimal field set has too few fields",
                     details={"minimal_field_count": len(minimal_fields)}
                 )
-            
+
             return HealthCheck(
                 name="configuration",
                 status=HealthStatus.HEALTHY,
@@ -290,7 +290,7 @@ class HealthChecker:
                     "balanced_fields": len(balanced_fields)
                 }
             )
-        
+
         except Exception as e:
             return HealthCheck(
                 name="configuration",
@@ -298,11 +298,11 @@ class HealthChecker:
                 message=f"Configuration check failed: {str(e)}",
                 details={"exception": str(e)}
             )
-    
+
     async def run_all_checks(self) -> Dict[str, Any]:
         """Run all health checks and return comprehensive status"""
         start_time = time.time()
-        
+
         # Run all health checks
         checks = await asyncio.gather(
             self.check_api_connectivity(),
@@ -311,7 +311,7 @@ class HealthChecker:
             asyncio.create_task(asyncio.coroutine(lambda: self.check_configuration)()),
             return_exceptions=True
         )
-        
+
         # Convert results to health checks
         health_checks = []
         for check in checks:
@@ -323,12 +323,12 @@ class HealthChecker:
                     status=HealthStatus.UNHEALTHY,
                     message=f"Health check failed: {str(check)}"
                 ))
-        
+
         # Determine overall status
         overall_status = HealthStatus.HEALTHY
         unhealthy_count = 0
         degraded_count = 0
-        
+
         for check in health_checks:
             if check.status == HealthStatus.UNHEALTHY:
                 unhealthy_count += 1
@@ -337,9 +337,9 @@ class HealthChecker:
                 degraded_count += 1
                 if overall_status == HealthStatus.HEALTHY:
                     overall_status = HealthStatus.DEGRADED
-        
+
         total_time_ms = (time.time() - start_time) * 1000
-        
+
         result = {
             "status": overall_status.value,
             "timestamp": time.time(),
@@ -352,7 +352,7 @@ class HealthChecker:
             },
             "checks": [check.to_dict() for check in health_checks]
         }
-        
+
         # Log health check result
         self.structured_logger.log_health_check(
             component="overall_system",
@@ -360,5 +360,5 @@ class HealthChecker:
             details=result["summary"],
             response_time_ms=total_time_ms
         )
-        
+
         return result

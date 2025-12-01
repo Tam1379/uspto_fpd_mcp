@@ -15,17 +15,17 @@ async def litigation_research_setup_prompt(
 ) -> str:
     """
     Litigation research setup with prosecution history and petition analysis.
-    
+
     WARNING: DEPENDENCIES: Requires Patent File Wrapper (PFW) MCP
-    
+
     Identifier fields (at least ONE required):
     - patent_number: US patent number (e.g., "11788453", "11,788,453")
     - application_number: Application number (e.g., "17896175", "17/896,175")
-    
+
     Research options:
     - include_prosecution: Include detailed prosecution history (true/false) [DEFAULT: true]
     - priority_documents: Document priority (litigation, due_diligence, all) [DEFAULT: litigation]
-    
+
     Returns comprehensive litigation research package with prosecution context and petition red flag analysis.
     """
     return f"""Litigation Research Setup - Prosecution + Petition Analysis
@@ -484,5 +484,3 @@ Cost-Optimized Research Plan:
 ** PFW-FPD INTEGRATION**: Combining prosecution history with petition analysis reveals complete patent development story crucial for litigation strategy.
 
 ** LITIGATION READY**: Organized document package and integrated analysis provide immediate litigation team support with strategic insights."""
-
-

@@ -84,7 +84,7 @@ class Settings(BaseSettings):
             except Exception:
                 # Fall back to environment variable if secure storage fails
                 pass
-            
+
             # Check for USPTO_API_KEY if still not provided
             if 'uspto_api_key' not in kwargs or not kwargs.get('uspto_api_key'):
                 kwargs['uspto_api_key'] = os.getenv('USPTO_API_KEY', '')
@@ -99,7 +99,7 @@ class Settings(BaseSettings):
             except Exception:
                 # Fall back to environment variable if secure storage fails
                 pass
-            
+
             # Check for MISTRAL_API_KEY if still not provided
             if 'mistral_api_key' not in kwargs or not kwargs.get('mistral_api_key'):
                 kwargs['mistral_api_key'] = os.getenv('MISTRAL_API_KEY')

@@ -996,4 +996,3 @@ def get_tool_reflections() -> str:
         _get_cost_section()
     ]
     return "\n\n---\n\n".join(sections) + "\n\n**End of Tool Guidance**\n"
-

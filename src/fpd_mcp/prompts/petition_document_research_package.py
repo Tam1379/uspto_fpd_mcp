@@ -15,15 +15,15 @@ async def petition_document_research_package_prompt(
 ) -> str:
     """
     Petition document research package for detailed case analysis and litigation preparation.
-    
+
     Identifier fields (at least ONE required):
     - petition_identifier: Specific petition UUID for direct lookup
     - application_number: Application number to find petition history (e.g., "17896175")
-    
+
     Document options:
     - document_priority: Priority level (high, medium, all) [DEFAULT: high]
     - extract_text: Extract document text for analysis (true/false) [DEFAULT: false]
-    
+
     Returns organized document package with download links and optional text extraction for detailed petition analysis.
     """
     return f"""Petition Document Research Package - Comprehensive Case Analysis
@@ -389,4 +389,3 @@ Scanned Documents (OCR Required):
 # =============================================================================
 # CROSS-MCP INTEGRATION PROMPT TEMPLATES
 # =============================================================================
-

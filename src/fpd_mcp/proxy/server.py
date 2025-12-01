@@ -37,29 +37,29 @@ api_client = None
 def sanitize_description(description: str, max_length: int = 40) -> str:
     """
     Sanitize document description for filename.
-    
+
     Args:
         description: Raw document description from API
         max_length: Maximum characters (default 40)
-    
+
     Returns:
         Sanitized description safe for filenames
     """
     if not description:
         return "DOCUMENT"
-    
+
     # Convert to uppercase
     clean = description.upper()
-    
+
     # Replace spaces with underscores
     clean = clean.replace(' ', '_')
-    
+
     # Remove special characters except underscore and hyphen
     clean = re.sub(r'[^A-Z0-9_-]', '', clean)
-    
+
     # Truncate to max length
     clean = clean[:max_length]
-    
+
     return clean
 
 
@@ -73,11 +73,11 @@ def generate_enhanced_filename(
 ) -> str:
     """
     Generate enhanced filename for FPD documents.
-    
+
     Format: PET-{date}_APP-{app}_PAT-{patent}_{description}.pdf
     or:     PET-{date}_APP-{app}_{description}.pdf (if no patent)
     or:     APP-{app}_PAT-{patent}_{description}.pdf (if no petition date)
-    
+
     Args:
         petition_mail_date: Petition filing date (YYYY-MM-DD format)
         app_number: Application number
@@ -85,43 +85,43 @@ def generate_enhanced_filename(
         document_description: Document description from API
         document_code: Document code (fallback)
         max_desc_length: Max chars for description (default 40)
-    
+
     Returns:
         Safe filename for download
     """
     # Build filename components
     components = []
-    
+
     # Add petition date if available (format: PET-YYYY-MM-DD)
     if petition_mail_date and petition_mail_date.strip():
         # Extract just the date portion (handles ISO format with time)
         date_part = petition_mail_date.split('T')[0] if 'T' in petition_mail_date else petition_mail_date
         components.append(f"PET-{date_part}")
-    
+
     # Add application number
     components.append(f"APP-{app_number or 'UNKNOWN'}")
-    
+
     # Add patent number if available
     if patent_number and patent_number.strip():
         components.append(f"PAT-{patent_number}")
-    
+
     # Sanitize description (use document_code as fallback)
     desc = document_description or document_code or "DOCUMENT"
     desc_clean = sanitize_description(desc, max_desc_length)
     components.append(desc_clean)
-    
+
     # Join and add extension
     filename = "_".join(components) + ".pdf"
-    
+
     return filename
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """Middleware to add security headers to all responses"""
-    
+
     async def dispatch(self, request, call_next):
         response = await call_next(request)
-        
+
         # Add security headers
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-Content-Type-Options"] = "nosniff"
@@ -129,7 +129,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["Content-Security-Policy"] = "default-src 'self'"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-        
+
         return response
 
 
@@ -222,13 +222,13 @@ def create_proxy_app(api_key: Optional[str] = None, port: Optional[int] = None) 
             return 8081
 
     app.state.port = port if port is not None else safe_parse_port()
-    
+
     # Add request size limit middleware (BEFORE other middleware)
     app.add_middleware(RequestSizeLimitMiddleware, max_request_size=MAX_REQUEST_SIZE)
 
     # Add security headers middleware
     app.add_middleware(SecurityHeadersMiddleware)
-    
+
     # Add CORS middleware with strict origins
     app.add_middleware(
         CORSMiddleware,
@@ -358,14 +358,14 @@ def create_proxy_app(api_key: Optional[str] = None, port: Optional[int] = None) 
             # Extract petition details for enhanced filename
             app_number = petition_data.get(FPDFields.APPLICATION_NUMBER_TEXT)
             patent_number = petition_data.get(FPDFields.PATENT_NUMBER)
-            
+
             # Extract petition mail date for filename
             petition_mail_date = petition_data.get(FPDFields.PETITION_MAIL_DATE)
-            
+
             # Get document description (with fallback to document code)
             doc_description = target_doc.get(FPDFields.DOCUMENT_CODE_DESCRIPTION_TEXT)
             doc_code = target_doc.get(FPDFields.DOCUMENT_CODE)
-            
+
             # Generate enhanced filename
             filename = generate_enhanced_filename(
                 petition_mail_date=petition_mail_date,

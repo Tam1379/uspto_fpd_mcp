@@ -18,22 +18,22 @@ def generate_request_id() -> str:
 
 
 def format_error_response(
-    message: str, 
-    status_code: int = 500, 
+    message: str,
+    status_code: int = 500,
     request_id: Optional[str] = None,
     context: Optional[Dict[str, Any]] = None,
     include_details: Optional[bool] = None
 ) -> Dict[str, Any]:
     """
     Format error response in consistent structure with sensitive data filtering
-    
+
     Args:
         message: Error message
         status_code: HTTP status code
         request_id: Request identifier for tracing (optional)
         context: Additional context for debugging (optional)
         include_details: Whether to include detailed error info (auto-detected from env if None)
-        
+
     Returns:
         Dict containing structured error response
     """
@@ -41,11 +41,11 @@ def format_error_response(
     if include_details is None:
         environment = os.getenv("ENVIRONMENT", "production").lower()
         include_details = environment in ["development", "dev", "test"]
-    
+
     # Always sanitize the message to remove sensitive data
     sanitizer = LogSanitizer()
     safe_message = sanitizer.sanitize_string(message)
-    
+
     # In production, provide generic messages for certain error types
     if not include_details:
         if status_code == 401:
@@ -60,30 +60,30 @@ def format_error_response(
             safe_message = "Configuration error"
         elif "timeout" in message.lower():
             safe_message = "Service temporarily unavailable"
-    
+
     response = {
         "error": safe_message,
         "status_code": status_code,
         "success": False
     }
-    
+
     if request_id:
         response["request_id"] = request_id
-        
+
     # Only include context in development/test environments
     if context and include_details:
         response["context"] = sanitizer.sanitize_for_json(context)
-        
+
     return response
 
 
 def sanitize_error_message(message: str) -> str:
     """
     Sanitize error message to remove potentially sensitive information.
-    
+
     Args:
         message: Original error message
-        
+
     Returns:
         Sanitized error message safe for external consumption
     """

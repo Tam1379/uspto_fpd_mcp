@@ -39,17 +39,17 @@ class EventType(Enum):
 
 class StructuredLogger:
     """Structured logger for consistent JSON logging format"""
-    
+
     def __init__(self, logger_name: str = __name__):
         """
         Initialize structured logger
-        
+
         Args:
             logger_name: Name for the logger instance
         """
         self.logger = logging.getLogger(logger_name)
         self.sanitizer = LogSanitizer()
-    
+
     def _create_base_event(
         self,
         level: LogLevel,
@@ -61,7 +61,7 @@ class StructuredLogger:
         # Sanitize message and all kwargs
         safe_message = self.sanitizer.sanitize_string(message)
         safe_kwargs = self.sanitizer.sanitize_for_json(kwargs)
-        
+
         return {
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "level": level.value,
@@ -70,7 +70,7 @@ class StructuredLogger:
             "logger": self.logger.name,
             **safe_kwargs
         }
-    
+
     def log_api_request(
         self,
         method: str,
@@ -91,7 +91,7 @@ class StructuredLogger:
             user_agent=user_agent
         )
         self.logger.info(json.dumps(event))
-    
+
     def log_api_response(
         self,
         request_id: str,
@@ -102,7 +102,7 @@ class StructuredLogger:
     ):
         """Log API response with performance metrics"""
         level = LogLevel.ERROR if status_code >= 400 else LogLevel.INFO
-        
+
         event = self._create_base_event(
             level,
             EventType.API_RESPONSE,
@@ -113,12 +113,12 @@ class StructuredLogger:
             response_size_bytes=response_size_bytes,
             error_details=error_details
         )
-        
+
         if level == LogLevel.ERROR:
             self.logger.error(json.dumps(event))
         else:
             self.logger.info(json.dumps(event))
-    
+
     def log_cache_event(
         self,
         cache_key: str,
@@ -129,7 +129,7 @@ class StructuredLogger:
         """Log cache hit/miss events"""
         event_type = EventType.CACHE_HIT if hit else EventType.CACHE_MISS
         message = f"Cache {'hit' if hit else 'miss'} for {method_name}"
-        
+
         event = self._create_base_event(
             LogLevel.DEBUG,
             event_type,
@@ -139,7 +139,7 @@ class StructuredLogger:
             ttl_seconds=ttl_seconds
         )
         self.logger.debug(json.dumps(event))
-    
+
     def log_circuit_breaker_event(
         self,
         circuit_name: str,
@@ -160,7 +160,7 @@ class StructuredLogger:
             failure_threshold=failure_threshold
         )
         self.logger.warning(json.dumps(event))
-    
+
     def log_security_event(
         self,
         event_description: str,
@@ -180,7 +180,7 @@ class StructuredLogger:
             severity=severity
         )
         self.logger.warning(json.dumps(event))
-    
+
     def log_performance_metric(
         self,
         operation: str,
@@ -197,7 +197,7 @@ class StructuredLogger:
             details=details or {}
         )
         self.logger.info(json.dumps(event))
-    
+
     def log_health_check(
         self,
         component: str,
@@ -207,7 +207,7 @@ class StructuredLogger:
     ):
         """Log health check results"""
         level = LogLevel.ERROR if status.lower() == "unhealthy" else LogLevel.INFO
-        
+
         event = self._create_base_event(
             level,
             EventType.HEALTH_CHECK,
@@ -217,12 +217,12 @@ class StructuredLogger:
             response_time_ms=response_time_ms,
             details=details or {}
         )
-        
+
         if level == LogLevel.ERROR:
             self.logger.error(json.dumps(event))
         else:
             self.logger.info(json.dumps(event))
-    
+
     def log_validation_error(
         self,
         field_name: str,
@@ -241,7 +241,7 @@ class StructuredLogger:
             error_message=error_message
         )
         self.logger.warning(json.dumps(event))
-    
+
     def log_error(
         self,
         error_message: str,
@@ -263,21 +263,21 @@ class StructuredLogger:
 
 class PerformanceTimer:
     """Context manager for measuring operation performance"""
-    
+
     def __init__(self, structured_logger: StructuredLogger, operation_name: str, details: Optional[Dict[str, Any]] = None):
         self.logger = structured_logger
         self.operation_name = operation_name
         self.details = details or {}
         self.start_time = None
-    
+
     def __enter__(self):
         self.start_time = time.time()
         return self
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.start_time is not None:
             duration_ms = (time.time() - self.start_time) * 1000
-            
+
             if exc_type is not None:
                 # Log error with performance context
                 self.details["duration_ms"] = duration_ms

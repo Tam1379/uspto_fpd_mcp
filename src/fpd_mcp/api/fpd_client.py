@@ -41,7 +41,7 @@ class FPDClient:
     def __init__(self, api_key: Optional[str] = None):
         """Initialize FPD client with USPTO API key"""
         self.base_url = "https://api.uspto.gov/api/v1/petition/decisions"
-        
+
         # Load API key with unified secure storage support
         if api_key:
             self.api_key = api_key
@@ -53,11 +53,11 @@ class FPDClient:
             except Exception:
                 # Fall back to environment variable
                 pass
-            
+
             # If still no key, try environment variable
             if not self.api_key:
                 self.api_key = os.getenv("USPTO_API_KEY")
-        
+
         if not self.api_key:
             raise ValueError("USPTO API key is required. Please provide via parameter, secure storage, or USPTO_API_KEY environment variable")
 
@@ -104,7 +104,7 @@ class FPDClient:
         )
 
         logger.info("FPD client initialized with USPTO API key, semaphores, circuit breakers, and cache")
-    
+
     def get_circuit_breaker_status(self) -> Dict[str, Any]:
         """Get status of all circuit breakers for monitoring"""
         return {
@@ -506,7 +506,7 @@ class FPDClient:
         # If still no key, try environment variable
         if not mistral_api_key:
             mistral_api_key = os.getenv("MISTRAL_API_KEY")
-            
+
         if not mistral_api_key:
             raise ValueError("MISTRAL_API_KEY required for OCR extraction")
 
