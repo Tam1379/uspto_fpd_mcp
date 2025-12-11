@@ -35,7 +35,7 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 The PowerShell script will:
 - ✅ Check for and auto-install uv (via winget or PowerShell script)
 - ✅ Install dependencies and create executable
-- ✅ Prompt for USPTO API key (required) and Mistral API key (optional) or Detect if you had installed the developer's other USPTO MCPs and ask if want to use existing keys from those installation.
+- ✅ Prompt for USPTO API key (required) and Mistral API key (optional) or Detect if you had installed the developer's other USPTO MCPs and ask if want to use existing keys from those installation. - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for detailed API key setup instructions
 - 🔒 **If entering in API keys, the script will automatically store API keys securely using Windows DPAPI encryption**
 - ✅ Ask if you have [USPTO PFW MCP](https://github.com/john-walkoe/uspto_pfw_mcp) already installed, and if so will used the USPTO PFW MCP's default centralized proxy
 - ✅ Ask if you want Claude Desktop integration configured
@@ -109,14 +109,14 @@ USPTO API Key:
   - Length: Exactly 30 characters
   - Format: Lowercase letters only (a-z)
   - Example: abcdefghijklmnopqrstuvwxyzabcd
-  - Get from: https://data.uspto.gov/myodp/
+  - Get from: https://data.uspto.gov/myodp/ - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for step-by-step setup instructions
 
 Mistral API Key:
   - Required: NO (optional, for OCR)
   - Length: Exactly 32 characters
   - Format: Letters (a-z, A-Z) and numbers (0-9)
   - Example: AbCdEfGh1234567890IjKlMnOp1234
-  - Get from: https://console.mistral.ai/
+  - Get from: https://console.mistral.ai/ - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for setup instructions
 
 
 Enter your USPTO API key (required - get from https://data.uspto.gov/myodp/):
@@ -365,8 +365,8 @@ The Linux script will:
 
 - ✅ Auto-install uv package manager if not present
 - ✅ Install dependencies and create executable
-- ✅ Prompt for USPTO API key (required) with validation
-- ✅ Prompt for Mistral API key (optional for OCR)
+- ✅ Prompt for USPTO API key (required) with validation - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for detailed API key setup instructions
+- ✅ Prompt for Mistral API key (optional for OCR) - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for setup instructions
 - ✅ API keys stored in separate secure storage files
 - ✅ Ask if you have [USPTO PFW MCP](https://github.com/john-walkoe/uspto_pfw_mcp) already installed, and if so will used the USPTO PFW MCP's default centralized proxy
 - ✅ **Interactive Claude Desktop configuration** with existing config merging
@@ -676,7 +676,7 @@ The n8n integration enables powerful automation workflows combining USPTO petiti
 
 **Required:**
 
-- `USPTO_API_KEY`: Your USPTO API key (free from [USPTO Open Data Portal](https://data.uspto.gov/myodp/))
+- `USPTO_API_KEY`: Your USPTO API key (free from [USPTO Open Data Portal](https://data.uspto.gov/myodp/)) - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for step-by-step setup instructions
 
 **Optional with defaults:**
 
@@ -820,8 +820,8 @@ claude mcp add uspto_fpd -s user \
 ### Prerequisites
 
 - **uv package manager** - [Install Guide](https://docs.astral.sh/uv/getting-started/installation/)
-- **USPTO API Key** - [Get Key](https://data.uspto.gov/myodp/)
-- **Mistral API Key** (optional) - For OCR functionality from [Mistral AI](https://mistral.ai/solutions/document-ai)
+- **USPTO API Key** - [Get Key](https://data.uspto.gov/myodp/) - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for step-by-step setup instructions
+- **Mistral API Key** (optional) - For OCR functionality from [Mistral AI](https://mistral.ai/solutions/document-ai) - See **[API_KEY_GUIDE.md](API_KEY_GUIDE.md)** for setup instructions
 - **Claude Desktop or Claude Code** - For MCP integration
 
 **Note:** The Mistral API key is optional. Without it, document extraction uses free PyPDF2 (works for text-based PDFs). With it, OCR is available for scanned documents (~$0.001/page).
